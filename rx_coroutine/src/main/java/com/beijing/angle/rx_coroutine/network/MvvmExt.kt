@@ -173,6 +173,8 @@ inline fun <T> VmLiveData<T>.vmObserverDefault(
 }
 
 
+
+
 /**
  * 默认不带loading的网络请求
  * 第一个参数继承自BaseActivity
@@ -212,6 +214,8 @@ inline fun <T> VmLiveData<T>.vmObserverDefault(
 }
 
 
+
+
 /**
  * 主网络请求 适用于页面必须请求网络后才显示的页面,页面的初始状态isShowLoading设置为true
  * 第一个参数继承自BaseActivity
@@ -228,6 +232,38 @@ inline fun <T> VmLiveData<T>.vmObserverMain(
             is VmState.Loading -> {
                 activity.setBaseViewStatus(EBaseViewStatus.LOADING)
                 activity.showLoadingLayout()
+
+            }
+
+            is VmState.Success -> {
+                it.data?.let {
+                    onSuccess(it)
+                    activity.showSuccessLayout()
+                } ?: activity.showErrorLayout("无数据")
+            }
+
+            is VmState.Error -> {
+                activity.setBaseViewStatus(EBaseViewStatus.ERROR)
+                activity.showErrorLayout(it.error.errorMsg)
+            }
+
+            VmState.TokenFailure -> BaseApp.instance.startLoginActivity()
+        }
+    }
+}
+
+
+@MainThread
+inline fun <T> VmLiveData<T>.vmObserverMain(
+    activity: BaseActivity<*>,
+    loadingTxt: String?,
+    crossinline onSuccess: ((T) -> Unit)
+) {
+    observe(activity) {
+        when (it) {
+            is VmState.Loading -> {
+                activity.setBaseViewStatus(EBaseViewStatus.UPLOAD)
+                activity.showUploadLayout(loadingTxt)
 
             }
 
@@ -288,6 +324,42 @@ inline fun <T> VmLiveData<T>.vmObserverMain(
         }
     }
 }
+
+
+@MainThread
+inline fun <T> VmLiveData<T>.vmObserverMain(
+    activity: BaseActivity<*>,
+    loadingTxt: String?,
+    crossinline onSuccess: ((T) -> Unit),
+    crossinline onComplete: (() -> Unit) = {}
+) {
+    observe(activity) {
+        when (it) {
+            is VmState.Loading -> {
+                activity.setBaseViewStatus(EBaseViewStatus.UPLOAD)
+                activity.showUploadLayout(loadingTxt)
+            }
+
+            is VmState.Success -> {
+                it.data?.let {
+                    onSuccess(it)
+                    activity.showSuccessLayout()
+                    onComplete()
+                } ?: activity.showErrorLayout("无数据")
+
+            }
+
+            is VmState.Error -> {
+                activity.setBaseViewStatus(EBaseViewStatus.ERROR)
+                activity.showErrorLayout(it.error.errorMsg)
+                onComplete()
+            }
+
+            VmState.TokenFailure -> BaseApp.instance.startLoginActivity()
+        }
+    }
+}
+
 
 
 //---------------------------------------Activity  end ------------------------------------
