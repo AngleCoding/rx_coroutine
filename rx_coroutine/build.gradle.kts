@@ -6,6 +6,8 @@ plugins {
     id("maven-publish")
 }
 
+group = "com.beijing.angle.rx_coroutine"
+
 android {
     namespace = "com.beijing.angle.rx_coroutine"
     compileSdk = 35
