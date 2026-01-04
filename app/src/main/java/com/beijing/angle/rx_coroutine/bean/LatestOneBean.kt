@@ -1,11 +1,15 @@
 package com.beijing.angle.rx_coroutine.bean
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 data class LatestOneBean(
     var msg: String? = null, // 查询成功
     var result: Result? = null,
     var code: String? = null // 200
 )
 
+@Parcelize
 data class Result(
     var createdTime: String? = null, // 2025-12-24 11:50:53
     var updatedTime: String? = null, // 2025-12-24 11:50:53
@@ -17,4 +21,4 @@ data class Result(
     var remark: String? = null, // 更新已知问题
     var type: String? = null, // HGZLSYTJ_DJY
     var forceUpdate: String? = null // 1
-)
+): Parcelable

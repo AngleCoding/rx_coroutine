@@ -1,7 +1,9 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.ksp)
+    id("kotlin-parcelize")
+    id("maven-publish")
 }
 
 android {
@@ -53,6 +55,7 @@ android {
         }
     }
 
+
 }
 
 dependencies {
@@ -93,9 +96,21 @@ dependencies {
     api(libs.pickerView)
     api(libs.adapter)
 
+}
 
+afterEvaluate {
+    publishing {
+        publications {
+            // 创建Maven发布 "release"
+            create<MavenPublication>("release") {
+                // 应用release构建组件
+                from(components["release"])
 
-
-
-
+                // 自定义发布属性
+                groupId = "com.beijing.angle.rx_coroutine"
+                artifactId = "rx_coroutine"
+                version = "v1.0.0"
+            }
+        }
+    }
 }
