@@ -1,0 +1,25 @@
+package com.beijing.angle.rx_coroutine.network
+
+import com.beijing.angle.coroutine_live_model.exception.AppException
+
+//import com.github.yuang.kt.android_mvvm.exception.AppException
+
+/**
+ * @author AnglePenCoding
+ * Created by on 2023/2/17 0017
+ * @website https://github.com/AnglePengCoding
+ */
+
+class VmResult<T> {
+    var onAppSuccess: (data: T) -> Unit = {}
+    var onAppError: (exception: AppException) -> Unit = {}
+    var onAppLoading: () -> Unit = {}
+    var onAppComplete: () -> Unit = {}
+}
+
+sealed class VmState<out T> {
+    object Loading : VmState<Nothing>()
+    data class Success<out T>(val data: T?) : VmState<T>()
+    data class Error(val error: AppException) : VmState<Nothing>()
+    object  TokenFailure : VmState<Nothing>()
+}

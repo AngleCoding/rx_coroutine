@@ -1,0 +1,86 @@
+[versions]
+agp = "8.10.1"
+kotlin = "2.0.21"
+coreKtx = "1.10.1"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+appcompat = "1.6.1"
+material = "1.10.0"
+activity = "1.8.0"
+constraintlayout = "2.1.4"
+
+fragment_version = "1.8.9"
+lifecycle_version = "2.9.4"
+
+okhttp = "4.12.0"
+rxhttp_version = '3.0.2'
+android_autosize_version = 'v1.2.1'
+utilcodex_version = '1.31.1'
+
+rxjava = '3.1.12'
+rxandroid = '3.0.2'
+
+ksp_version = '2.0.21-1.0.27'
+rxbinding_version = '4.0.0'
+flycoTabLayout_version = '3.0.0'
+
+xpopup_version = '2.10.0'
+android_picture_version = 'v2.0.4'
+appupdate_version = '4.3.6'
+pickerView_version = '4.1.9'
+adapter_version = '4.0.0-beta02'
+
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+
+
+#引用
+androidx-fragment = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragment_version" }
+lifecycle = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle_version" }
+livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle_version" }
+lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle_version" }
+livedata-savedstate = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-savedstate", version.ref = "lifecycle_version" }
+
+
+okhttp3 = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+rxhttp = { group = "com.github.liujingxing.rxhttp", name = "rxhttp", version.ref = "rxhttp_version" }
+rxhttp-compiler = { group = "com.github.liujingxing.rxhttp", name = "rxhttp-compiler", version.ref = "rxhttp_version" }
+
+rxjava = { group = "io.reactivex.rxjava3", name = "rxjava", version.ref = "rxjava" }
+rxandroid = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxandroid" }
+
+androidAutosize = { group = "com.github.JessYanCoding", name = "AndroidAutoSize", version.ref = "android_autosize_version" }
+
+
+
+utilcodex = { group = "com.blankj", name = "utilcodex", version.ref = "utilcodex_version" }
+
+
+rxbinding = { group = "com.jakewharton.rxbinding4", name = "rxbinding", version.ref = "rxbinding_version" }
+rxviewpage = { group = "com.jakewharton.rxbinding4", name = "rxbinding-viewpager", version.ref = "rxbinding_version" }
+rxrecyclerview = { group = "com.jakewharton.rxbinding4", name = "rxbinding-recyclerview", version.ref = "rxbinding_version" }
+
+
+
+
+flycoTabLayout = { group = "io.github.h07000223", name = "flycoTabLayout", version.ref = "flycoTabLayout_version" }
+xpopup = { group = "com.github.li-xiaojun", name = "XPopup", version.ref = "xpopup_version" }
+picture = { group = "com.github.AngleCoding", name = "android_picture", version.ref = "android_picture_version" }
+appupdate = { group = "io.github.azhon", name = "appupdate", version.ref = "appupdate_version" }
+pickerView = { group = "com.contrarywind", name = "Android-PickerView", version.ref = "pickerView_version" }
+adapter = { group = "io.github.cymchad", name = "BaseRecyclerViewAdapterHelper", version.ref = "adapter_version" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp_version" }
