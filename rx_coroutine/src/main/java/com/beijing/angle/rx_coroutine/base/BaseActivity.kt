@@ -1,6 +1,7 @@
 package com.beijing.angle.rx_coroutine.base
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.beijing.angle.rx_coroutine.databinding.ActivityBaseBinding
 import com.beijing.angle.rx_coroutine.ext.click
 import com.beijing.angle.rx_coroutine.lifecycle.RxActivity
 import com.beijing.angle.rx_coroutine.utils.AppManager
+import com.blankj.utilcode.util.BarUtils
 import me.jessyan.autosize.internal.CustomAdapt
 
 /**
@@ -125,6 +127,7 @@ abstract class BaseActivity<VB : ViewBinding> : RxActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        BarUtils.setStatusBarColor(this, Color.TRANSPARENT)
         AppManager.instance.addActivity(this)
         this.mContext = applicationContext
         enableEdgeToEdge()
