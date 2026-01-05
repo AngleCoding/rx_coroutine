@@ -173,7 +173,7 @@ abstract class BaseFragment<VB : ViewBinding> : RxFragment(), IBaseUIView {
         }
 
         //显示界面
-        baseBinding.contentLayout.visibility = GONE
+        baseBinding.contentLayout.visibility = VISIBLE
         uploadStubView?.visibility = VISIBLE
         loadingView?.visibility = GONE
         errorView?.visibility = GONE

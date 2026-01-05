@@ -554,6 +554,39 @@ inline fun <T> VmLiveData<T>.vmObserverMain(
 }
 
 
+@MainThread
+inline fun <T> VmLiveData<T>.vmObserverMain(
+    fragment: BaseFragment<*>,
+    loadingTxt: String?,
+    crossinline onSuccess: ((T) -> Unit)
+) {
+    observe(fragment) {
+        when (it) {
+            is VmState.Loading -> {
+                fragment.setBaseViewStatus(EBaseViewStatus.UPLOAD)
+                fragment.showUploadLayout(loadingTxt)
+
+            }
+
+            is VmState.Success -> {
+                it.data?.let {
+                    onSuccess(it)
+                    fragment.showSuccessLayout()
+                } ?: fragment.showErrorLayout("无数据")
+
+            }
+
+            is VmState.Error -> {
+                fragment.setBaseViewStatus(EBaseViewStatus.ERROR)
+                fragment.showErrorLayout(it.error.errorMsg)
+            }
+
+            VmState.TokenFailure -> BaseApp.instance.startLoginActivity()
+        }
+    }
+}
+
+
 /**
  * 主网络请求 适用于页面必须请求网络后才显示的页面,页面的初始状态isShowLoading设置为true
  * 第一个参数继承自BaseFragment
@@ -593,6 +626,42 @@ inline fun <T> VmLiveData<T>.vmObserverMain(
         }
     }
 }
+
+
+@MainThread
+inline fun <T> VmLiveData<T>.vmObserverMain(
+    fragment: BaseFragment<*>,
+    loadingTxt: String?,
+    crossinline onSuccess: ((T) -> Unit),
+    crossinline onComplete: (() -> Unit) = {}
+) {
+    observe(fragment) {
+        when (it) {
+            is VmState.Loading -> {
+                fragment.setBaseViewStatus(EBaseViewStatus.UPLOAD)
+                fragment.showUploadLayout(loadingTxt)
+            }
+
+            is VmState.Success -> {
+                it.data?.let {
+                    onSuccess(it)
+                    fragment.showSuccessLayout()
+                    onComplete()
+                } ?: fragment.showErrorLayout("无数据")
+
+            }
+
+            is VmState.Error -> {
+                fragment.setBaseViewStatus(EBaseViewStatus.ERROR)
+                fragment.showErrorLayout(it.error.errorMsg)
+                onComplete()
+            }
+
+            VmState.TokenFailure -> BaseApp.instance.startLoginActivity()
+        }
+    }
+}
+
 
 //---------------------------------------fragment  end ------------------------------------
 
