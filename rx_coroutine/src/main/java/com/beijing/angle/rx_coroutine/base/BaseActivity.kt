@@ -136,7 +136,9 @@ abstract class BaseActivity<VB : ViewBinding> : RxActivity(),
         baseBinding = ActivityBaseBinding.inflate(layoutInflater)
         if (isToolbarVisibility()) {
             baseBinding.titleBar.visibility = VISIBLE
+            baseBinding.mView.visibility = VISIBLE
         } else {
+            baseBinding.mView.visibility = GONE
             baseBinding.titleBar.visibility = GONE
         }
         setContentView(baseBinding.root)
