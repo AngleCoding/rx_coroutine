@@ -274,7 +274,6 @@ abstract class BaseFragment<VB : ViewBinding> : RxFragment(), IBaseUIView {
         uploadStubView?.visibility = GONE
 
 
-        Log.e("showErrorLayout", "showErrorLayout: " )
         errorView?.findViewById<TextView>(R.id.mTvContent)?.apply {
             text = loadingTxt
         }
