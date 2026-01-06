@@ -173,8 +173,6 @@ inline fun <T> VmLiveData<T>.vmObserverDefault(
 }
 
 
-
-
 /**
  * 默认不带loading的网络请求
  * 第一个参数继承自BaseActivity
@@ -214,8 +212,6 @@ inline fun <T> VmLiveData<T>.vmObserverDefault(
 }
 
 
-
-
 /**
  * 主网络请求 适用于页面必须请求网络后才显示的页面,页面的初始状态isShowLoading设置为true
  * 第一个参数继承自BaseActivity
@@ -359,7 +355,6 @@ inline fun <T> VmLiveData<T>.vmObserverMain(
         }
     }
 }
-
 
 
 //---------------------------------------Activity  end ------------------------------------
@@ -521,6 +516,50 @@ inline fun <T> VmLiveData<T>.vmObserverDefault(
  * 第一个参数继承自BaseFragment
  * 第二个参数 是否toast提示错误
  * 第三个参数 成功回调
+ *
+ *
+ *   private val baseModel: BaseModel by lazy { BaseModel() }
+ *
+ *    baseModel.latestOneBean.vmObserverMain(this, onSuccess = {
+ *         })
+ *
+ *
+ *
+ * class BaseModel : BaseViewModel() {
+ *
+ *     val baseRepository: Repository by lazy { Repository() }
+ *
+ *     val latestOneBean: VmLiveData<LatestOneBean> = MutableLiveData()
+ *
+ *     fun getLatestOne() {
+ *         launchVmRequest({
+ *             baseRepository.getLatestOne()
+ *         }, latestOneBean)
+ *     }
+ *
+ * }
+ *
+ *
+ * class Repository {
+ *
+ *     suspend fun getLatestOne(): BaseResponse<LatestOneBean> {
+ *         val bean = RxHttp.Companion.get(BASE_URL + "/")
+ *             .addQuery("type", "HGZLSYTJ_DJY")
+ *             .setHeader("deviceCode", DeviceUtils.getUniqueDeviceId())
+ *             .toAwait<LatestOneBean>()
+ *             .retry(2, 1000) {
+ *                 it is ConnectException
+ *                 it is SocketTimeoutException
+ *             }
+ *             .await()
+ *         return BaseResponse(bean.msg, bean, bean.code)
+ *     }
+ *
+ *
+ * }
+ *
+ *
+ *
  */
 @MainThread
 inline fun <T> VmLiveData<T>.vmObserverMain(

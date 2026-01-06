@@ -14,7 +14,35 @@ import androidx.fragment.app.FragmentActivity
  */
 
 
-// 扩展函数：为Activity添加单个权限请求
+/**
+ * 扩展函数：为Activity添加单个权限请求
+ *
+ *
+ *   if (ContextCompat.checkSelfPermission(
+ *                 this,
+ *                 Manifest.permission.CAMERA
+ *             ) == PackageManager.PERMISSION_GRANTED
+ *         ) {
+ *             startCamera()
+ *         } else {
+ *             val lanch =
+ *                 registerForSinglePermission(Manifest.permission.CAMERA) { isGranted ->
+ *                     {
+ *                         if (isGranted) {
+ *                             showToast("相机权限申请成功")
+ *                         } else {
+ *                             showToast("相机权限未打开")
+ *                         }
+ *                     }
+ *
+ *                 }
+ *
+ *             lanch.launch(Manifest.permission.CAMERA)
+ *         }
+ *
+ *
+ */
+
 fun AppCompatActivity.registerForSinglePermission(
     permission: String,
     callback: (Boolean) -> Unit
@@ -46,7 +74,32 @@ fun Fragment.registerForSinglePermission(
 }
 
 
-// 扩展函数：为FragmentActivity添加多权限请求
+/**
+ * 添加多权限请求
+ *
+ * private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
+ *
+ *  // 注册权限请求
+ *         permissionLauncher = registerForMultiplePermissions { permissions ->
+ *             permissions.forEach { (permission, isGranted) ->
+ *                 if (isGranted) {
+ *                     Toast.makeText(this, "$permission 已授权", Toast.LENGTH_SHORT).show()
+ *                 } else {
+ *                     Toast.makeText(this, "$permission 未授权", Toast.LENGTH_SHORT).show()
+ *                 }
+ *             }
+ *         }
+ *
+ *
+ *          permissionLauncher.launch(
+ *                 arrayOf(
+ *                     Manifest.permission.CAMERA,
+ *                     Manifest.permission.ACCESS_FINE_LOCATION,
+ *                     Manifest.permission.READ_EXTERNAL_STORAGE
+ *                 )
+ *             )
+ *
+ */
 fun AppCompatActivity.registerForMultiplePermissions(
     callback: (Map<String, Boolean>) -> Unit
 ): ActivityResultLauncher<Array<String>> {
