@@ -20,19 +20,78 @@ import com.beijing.angle.rx_coroutine.lifecycle.RxFragment
  * @description:所有Fragment基类
  * @date: 2025/12/19 17:49
  * @Link: https://github.com/AngleCoding
+ *
+ *
+ *
+ *     private val mFragmentList: ArrayList<Fragment> = ArrayList()
+ *
+ *      val titles = arrayOf(
+ *             "推荐"
+ *         )
+ *         val fragment = MyFragment.newInstance()
+ *
+ *
+ *          mFragmentList.add(fragment)
+ *
+ *            binding.mViewPager.adapter = FragmentAdapter(supportFragmentManager, mFragmentList)
+ *         binding.mViewPager.offscreenPageLimit = mFragmentList.size
+ *         binding.tab.setViewPager(binding.mViewPager, titles)
+ *         binding.tab.onPageSelected(0)
+ *
+ *
+ *
+ *     companion object {
+ *         fun newInstance(): MyFragment {
+ *             val fragment = MyFragment()
+ *             val args = Bundle()
+ *             fragment.arguments = args
+ *             return fragment
+ *         }
+ *     }
+ *
+ *
+ *  <LinearLayout
+ *         android:id="@+id/contentLayout"
+ *         android:orientation="vertical"
+ *         android:layout_marginLeft="@dimen/dp_15"
+ *         android:layout_marginRight="@dimen/dp_15"
+ *         android:layout_width="match_parent"
+ *         android:layout_height="match_parent">
+ *
+ *         <com.flyco.tablayout.SlidingTabLayout
+ *             android:id="@+id/tab"
+ *             tl:tl_textBold="SELECT"
+ *             android:layout_width="match_parent"
+ *             android:layout_height="@dimen/dp_50"
+ *             tl:tl_indicator_width="30dp"
+ *             tl:tl_indicator_height="@dimen/dp_7"
+ *             tl:tl_tab_padding="20dp"
+ *             tl:tl_indicator_bounce_enable="true"
+ *             tl:tl_indicator_anim_duration="5000"
+ *             tl:tl_tab_space_equal="false"
+ *             tl:tl_indicator_style="NORMAL"
+ *             tl:tl_indicator_corner_radius="@dimen/dp_10"
+ *             tl:tl_textSelectColor="#2E81FF"
+ *             tl:tl_indicator_color="#2E81FF"
+ *             tl:tl_textUnselectColor="#8CA0CD"
+ *             tl:tl_textsize="18dp"
+ *
+ *             />
+ *
+ *         <com.beijing.angle.rx_coroutine.widget.NoScrollViewPager
+ *             android:id="@+id/mViewPager"
+ *             android:layout_width="match_parent"
+ *             android:layout_height="match_parent" />
+ *
+ *     </LinearLayout>
+ *
+ *
+ *
  */
 
 abstract class BaseFragment<VB : ViewBinding> : RxFragment(), IBaseUIView {
 
 
-    //    companion object {
-//        fun newInstance(id: String?): BaseFragment {
-//            val fragment = BaseFragment()
-//            val args = Bundle()
-//            fragment.arguments = args
-//            return fragment
-//        }
-//    }
 
     private lateinit var baseBinding: FragmentBaseBinding
 
