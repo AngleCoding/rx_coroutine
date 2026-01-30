@@ -18,7 +18,7 @@ import com.jakewharton.rxbinding4.viewpager.pageSelections
 import kotlin.math.abs
 
 
-class MainActivity : BaseActivity<ActivityMainBinding>(), ScrollChangeListener {
+class MainActivity : BaseActivity<ActivityMainBinding>() {
 
 
     private val mFragmentList: ArrayList<Fragment> = ArrayList()
@@ -32,8 +32,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), ScrollChangeListener {
     }
 
 
-    @SuppressLint("CheckResult")
-    @androidx.annotation.RequiresPermission(android.Manifest.permission.POST_NOTIFICATIONS)
     override fun initView(bundle: Bundle?) {
 
         val titles = arrayOf(
@@ -68,8 +66,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), ScrollChangeListener {
         binding.tab.setViewPager(binding.mViewPager, titles)
         binding.tab.onPageSelected(0)
 
-        fragment.setScrollChangeListener(this)
-
     }
 
 
@@ -86,10 +82,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), ScrollChangeListener {
 
     override fun initData() {
 
-    }
-
-
-    override fun onScrollChange(scrollY: Int, oldScrollY: Int) {
     }
 
 

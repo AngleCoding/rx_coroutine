@@ -9,11 +9,14 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.viewbinding.ViewBinding
 import com.beijing.angle.rx_coroutine.R
 import com.beijing.angle.rx_coroutine.databinding.FragmentBaseBinding
 import com.beijing.angle.rx_coroutine.ext.click
 import com.beijing.angle.rx_coroutine.lifecycle.RxFragment
+import java.io.PrintWriter
+import java.io.StringWriter
 
 /**
  * @author 刘红鹏
@@ -92,7 +95,6 @@ import com.beijing.angle.rx_coroutine.lifecycle.RxFragment
 abstract class BaseFragment<VB : ViewBinding> : RxFragment(), IBaseUIView {
 
 
-
     private lateinit var baseBinding: FragmentBaseBinding
 
 
@@ -156,12 +158,18 @@ abstract class BaseFragment<VB : ViewBinding> : RxFragment(), IBaseUIView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initView(savedInstanceState)
-        if (isAdded && isVisible && !isHidden) {
-            initViewModel()
+        try {
+            initView(savedInstanceState)
+            if (isAdded && isVisible && !isHidden) {
+                initViewModel()
+            }
+            initData()
+            initListener()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(mContext, getCompleteExceptionInfo(e), Toast.LENGTH_LONG).show()
         }
-        initData()
-        initListener()
+
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -178,27 +186,33 @@ abstract class BaseFragment<VB : ViewBinding> : RxFragment(), IBaseUIView {
 
 
     override fun setBaseViewStatus(baseViewStatus: EBaseViewStatus?) {
-        when (baseViewStatus) {
-            EBaseViewStatus.LOADING -> {
-                showLoadingLayout()
-            }
+        try {
+            when (baseViewStatus) {
+                EBaseViewStatus.LOADING -> {
+                    showLoadingLayout()
+                }
 
-            EBaseViewStatus.SUCCESS -> {
-                showSuccessLayout()
-            }
+                EBaseViewStatus.SUCCESS -> {
+                    showSuccessLayout()
+                }
 
-            EBaseViewStatus.ERROR -> {
-                showErrorLayout("")
-            }
+                EBaseViewStatus.ERROR -> {
+                    showErrorLayout("")
+                }
 
-            EBaseViewStatus.UPLOAD -> {
-                showUploadLayout("")
-            }
+                EBaseViewStatus.UPLOAD -> {
+                    showUploadLayout("")
+                }
 
-            else -> {
-                showErrorLayout("")
+                else -> {
+                    showErrorLayout("")
+                }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(mContext, getCompleteExceptionInfo(e), Toast.LENGTH_LONG).show()
         }
+
     }
 
 
@@ -206,40 +220,52 @@ abstract class BaseFragment<VB : ViewBinding> : RxFragment(), IBaseUIView {
      * 显示加载中界面
      */
     override fun showLoadingLayout() {
-        loadingView ?: let {
-            loadingView = baseBinding.loadingStub.inflate()
+        try {
+            loadingView ?: let {
+                loadingView = baseBinding.loadingStub.inflate()
+            }
+
+            //显示界面
+            baseBinding.contentLayout.visibility = GONE
+            loadingView?.visibility = VISIBLE
+            errorView?.visibility = GONE
+
+
+            //更改状态
+            myBaseViewStatus = EBaseViewStatus.LOADING
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(mContext, getCompleteExceptionInfo(e), Toast.LENGTH_LONG).show()
         }
 
-        //显示界面
-        baseBinding.contentLayout.visibility = GONE
-        loadingView?.visibility = VISIBLE
-        errorView?.visibility = GONE
-
-
-        //更改状态
-        myBaseViewStatus = EBaseViewStatus.LOADING
     }
 
 
     override fun showUploadLayout(loadingTxt: String?) {
-        uploadStubView ?: let {
-            uploadStubView = baseBinding.uploadStub.inflate()
+        try {
+            uploadStubView ?: let {
+                uploadStubView = baseBinding.uploadStub.inflate()
+            }
+
+
+            uploadStubView?.findViewById<TextView>(R.id.mTvContent)?.apply {
+                text = loadingTxt
+            }
+
+            //显示界面
+            baseBinding.contentLayout.visibility = VISIBLE
+            uploadStubView?.visibility = VISIBLE
+            loadingView?.visibility = GONE
+            errorView?.visibility = GONE
+
+
+            //更改状态
+            myBaseViewStatus = EBaseViewStatus.UPLOAD
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(mContext, getCompleteExceptionInfo(e), Toast.LENGTH_LONG).show()
         }
 
-
-        uploadStubView?.findViewById<TextView>(R.id.mTvContent)?.apply {
-            text = loadingTxt
-        }
-
-        //显示界面
-        baseBinding.contentLayout.visibility = VISIBLE
-        uploadStubView?.visibility = VISIBLE
-        loadingView?.visibility = GONE
-        errorView?.visibility = GONE
-
-
-        //更改状态
-        myBaseViewStatus = EBaseViewStatus.UPLOAD
 
     }
 
@@ -247,14 +273,20 @@ abstract class BaseFragment<VB : ViewBinding> : RxFragment(), IBaseUIView {
      * 显示子布局,隐藏加载中和错误布局
      */
     override fun showSuccessLayout() {
-        //显示界面
-        baseBinding.contentLayout.visibility = VISIBLE
-        loadingView?.visibility = GONE
-        errorView?.visibility = GONE
-        uploadStubView?.visibility = GONE
+        try {
+            //显示界面
+            baseBinding.contentLayout.visibility = VISIBLE
+            loadingView?.visibility = GONE
+            errorView?.visibility = GONE
+            uploadStubView?.visibility = GONE
 
-        //更改状态
-        myBaseViewStatus = EBaseViewStatus.SUCCESS
+            //更改状态
+            myBaseViewStatus = EBaseViewStatus.SUCCESS
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(mContext, getCompleteExceptionInfo(e), Toast.LENGTH_LONG).show()
+        }
+
     }
 
     /**
@@ -263,30 +295,48 @@ abstract class BaseFragment<VB : ViewBinding> : RxFragment(), IBaseUIView {
      * @param error
      */
     override fun showErrorLayout(loadingTxt: String?) {
-        errorView ?: let {
-            errorView = baseBinding.errorStub.inflate()
-        }
-
-        //显示界面
-        errorView?.visibility = VISIBLE
-        baseBinding.contentLayout.visibility = GONE
-        loadingView?.visibility = GONE
-        uploadStubView?.visibility = GONE
-
-
-        errorView?.findViewById<TextView>(R.id.mTvContent)?.apply {
-            text = loadingTxt
-        }
-
-        errorView?.findViewById<TextView>(R.id.mBtRetry)?.apply {
-            this.click {
-                iniAgainRequestViewModel()
+        try {
+            errorView ?: let {
+                errorView = baseBinding.errorStub.inflate()
             }
+
+            //显示界面
+            errorView?.visibility = VISIBLE
+            baseBinding.contentLayout.visibility = GONE
+            loadingView?.visibility = GONE
+            uploadStubView?.visibility = GONE
+
+
+            errorView?.findViewById<TextView>(R.id.mTvContent)?.apply {
+                text = loadingTxt
+            }
+
+            errorView?.findViewById<TextView>(R.id.mBtRetry)?.apply {
+                this.click {
+                    iniAgainRequestViewModel()
+                }
+            }
+
+            //更改状态
+            myBaseViewStatus = EBaseViewStatus.ERROR
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(mContext, getCompleteExceptionInfo(e), Toast.LENGTH_LONG).show()
         }
 
-        //更改状态
-        myBaseViewStatus = EBaseViewStatus.ERROR
+
     }
 
+
+    /**
+     * 获取异常的详细信息（包含cause）
+     */
+    fun getCompleteExceptionInfo(throwable: Throwable): String {
+        val sb = StringBuilder()
+        val writer = StringWriter()
+        throwable.printStackTrace(PrintWriter(writer))
+        sb.append(writer.toString())
+        return sb.toString()
+    }
 
 }
