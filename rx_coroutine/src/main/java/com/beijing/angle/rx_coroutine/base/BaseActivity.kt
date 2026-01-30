@@ -19,6 +19,7 @@ import com.beijing.angle.rx_coroutine.ext.click
 import com.beijing.angle.rx_coroutine.lifecycle.RxActivity
 import com.beijing.angle.rx_coroutine.utils.AppManager
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.KeyboardUtils.clickBlankArea2HideSoftInput
 import io.reactivex.rxjava3.core.Observer
 import me.jessyan.autosize.internal.CustomAdapt
 import java.io.PrintWriter
