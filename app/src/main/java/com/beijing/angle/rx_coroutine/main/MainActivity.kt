@@ -1,21 +1,13 @@
 package com.beijing.angle.rx_coroutine.main
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.beijing.angle.rx_coroutine.adapter.FragmentAdapter
 import com.beijing.angle.rx_coroutine.base.BaseActivity
 import com.beijing.angle.rx_coroutine.databinding.ActivityMainBinding
-import com.beijing.angle.rx_coroutine.ext.log
-import com.beijing.angle.rx_coroutine.ext.showToast
 import com.beijing.angle.rx_coroutine.main.fragment.MyFragment
-import com.beijing.angle.rx_coroutine.main.fragment.MyFragment.ScrollChangeListener
 import com.beijing.angle.rx_coroutine.main.fragment.MyFragment2
-import com.flyco.tablayout.utils.FragmentChangeManager
-import com.jakewharton.rxbinding4.viewpager.pageSelections
-import kotlin.math.abs
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {

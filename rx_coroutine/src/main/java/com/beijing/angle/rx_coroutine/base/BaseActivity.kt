@@ -30,38 +30,44 @@ import java.io.StringWriter
  * @date: 2025/12/19 17:47
  * @Link: https://github.com/AngleCoding
  *
- *
- *
- *  viewBinding{
- *         enable= true
- *     }
- *
- *
- * class MainActivity : BaseActivity<ActivityMainBinding>() {
- *
- *
- *     override fun getViewBinding(inflater: LayoutInflater): ActivityMainBinding {
- *         return ActivityMainBinding.inflate(inflater)
- *     }
- *
- *     override fun initView(bundle: Bundle?) {
- *
- *     }
- *
- *     override fun initListener() {
- *     }
- *
- *     override fun initViewModel() {
- *     }
- *
- *     override fun iniAgainRequestViewModel() {
- *     }
- *
- *     override fun initData() {
- *     }
- * }
- *
  */
+
+
+/**
+viewBinding{
+    enable= true
+}
+
+ */
+
+
+/**
+
+class MainActivity : BaseActivity<ActivityMainBinding>() {
+
+
+    override fun getViewBinding(inflater: LayoutInflater): ActivityMainBinding {
+        return ActivityMainBinding.inflate(inflater)
+    }
+
+    override fun initView(bundle: Bundle?) {
+    }
+
+    override fun initListener() {
+    }
+
+    override fun initViewModel() {
+    }
+
+    override fun iniAgainRequestViewModel() {
+
+    }
+
+    override fun initData() {
+    }
+}
+
+*/
 
 abstract class BaseActivity<VB : ViewBinding> : RxActivity(),
     CustomAdapt, IBaseUIView {

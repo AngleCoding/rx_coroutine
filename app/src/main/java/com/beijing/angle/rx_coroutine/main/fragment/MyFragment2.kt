@@ -3,15 +3,10 @@ package com.beijing.angle.rx_coroutine.main.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.dynamicanimation.animation.DynamicAnimation
-import androidx.dynamicanimation.animation.SpringAnimation
-import androidx.dynamicanimation.animation.SpringForce
 import com.beijing.angle.rx_coroutine.base.BaseFragment
 import com.beijing.angle.rx_coroutine.databinding.FragmentTwoBinding
-import com.beijing.angle.rx_coroutine.ext.showToast
 import com.beijing.angle.rx_coroutine.model.BaseModel
 import com.beijing.angle.rx_coroutine.network.vmObserverMain
-import com.jakewharton.rxbinding4.view.focusChanges
 
 
 /**
