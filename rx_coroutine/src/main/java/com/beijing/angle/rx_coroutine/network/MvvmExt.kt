@@ -518,17 +518,13 @@ inline fun <T> VmLiveData<T>.vmObserverDefault(
  * 第三个参数 成功回调
  *
  *
- *   private val baseModel: BaseModel by lazy { BaseModel() }
+ *    private val baseModel: BaseModel by lazy { BaseModel() }
  *
  *    baseModel.latestOneBean.vmObserverMain(this, onSuccess = {
  *         })
  *
- *
- *
- * class BaseModel : BaseViewModel() {
- *
+ *    class BaseModel : BaseViewModel() {
  *     val baseRepository: Repository by lazy { Repository() }
- *
  *     val latestOneBean: VmLiveData<LatestOneBean> = MutableLiveData()
  *
  *     fun getLatestOne() {
@@ -537,10 +533,8 @@ inline fun <T> VmLiveData<T>.vmObserverDefault(
  *         }, latestOneBean)
  *     }
  *
- * }
  *
- *
- * class Repository {
+ *    class Repository {
  *
  *     suspend fun getLatestOne(): BaseResponse<LatestOneBean> {
  *         val bean = RxHttp.Companion.get(BASE_URL + "/")
@@ -556,7 +550,6 @@ inline fun <T> VmLiveData<T>.vmObserverDefault(
  *     }
  *
  *
- * }
  *
  *
  *

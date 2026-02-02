@@ -25,12 +25,10 @@ class AppManager {
     }
 
     public fun addActivity(activity: RxActivity) {
-        log("AppCompatActivity ->>>" + activity::class.simpleName)
         activities.add(WeakReference(activity))
     }
 
     fun removeActivity(activity: RxActivity) {
-        log("removeActivity ->>>" + activity::class.simpleName)
         activities.removeAll { it.get() == activity }
     }
 

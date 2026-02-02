@@ -24,8 +24,9 @@ import java.io.StringWriter
  * @date: 2025/12/19 17:49
  * @Link: https://github.com/AngleCoding
  *
- *
- *
+ */
+
+/**
  *     private val mFragmentList: ArrayList<Fragment> = ArrayList()
  *
  *      val titles = arrayOf(
@@ -36,7 +37,7 @@ import java.io.StringWriter
  *
  *          mFragmentList.add(fragment)
  *
- *            binding.mViewPager.adapter = FragmentAdapter(supportFragmentManager, mFragmentList)
+ *         binding.mViewPager.adapter = FragmentAdapter(supportFragmentManager, mFragmentList)
  *         binding.mViewPager.offscreenPageLimit = mFragmentList.size
  *         binding.tab.setViewPager(binding.mViewPager, titles)
  *         binding.tab.onPageSelected(0)
@@ -53,7 +54,7 @@ import java.io.StringWriter
  *     }
  *
  *
- *  <LinearLayout
+ *    <LinearLayout
  *         android:id="@+id/contentLayout"
  *         android:orientation="vertical"
  *         android:layout_marginLeft="@dimen/dp_15"

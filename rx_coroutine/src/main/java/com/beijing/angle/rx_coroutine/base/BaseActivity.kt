@@ -34,39 +34,33 @@ import java.io.StringWriter
  */
 
 
-/**
-viewBinding{
-    enable= true
-}
-
- */
 
 
 /**
-
-class MainActivity : BaseActivity<ActivityMainBinding>() {
-
-
-    override fun getViewBinding(inflater: LayoutInflater): ActivityMainBinding {
-        return ActivityMainBinding.inflate(inflater)
-    }
-
-    override fun initView(bundle: Bundle?) {
-    }
-
-    override fun initListener() {
-    }
-
-    override fun initViewModel() {
-    }
-
-    override fun iniAgainRequestViewModel() {
-
-    }
-
-    override fun initData() {
-    }
-}
+ *
+ *     viewBinding{ enable= true }
+ *
+ *
+ *    class MainActivity : BaseActivity<ActivityMainBinding>() {
+ *
+ *     override fun getViewBinding(inflater: LayoutInflater): ActivityMainBinding {
+ *        return ActivityMainBinding.inflate(inflater)
+ *     }
+ *
+ *     override fun initView(bundle: Bundle?) {
+ *     }
+ *
+ *    override fun initListener() {
+ *     }
+ *
+ *    override fun initViewModel() {
+ *    }
+ *
+ *    override fun iniAgainRequestViewModel() {
+ *    }
+ *
+ *    override fun initData() {
+ *     }
 
 */
 

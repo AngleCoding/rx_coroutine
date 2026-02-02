@@ -40,6 +40,9 @@ fun AppCompatActivity.dismissKeyBoard(view: View) {
 
 /**
  * Activity 无动画跳转
+ *
+ *    this.openActivity<MainActivity>()
+ *
  */
 inline fun <reified T : AppCompatActivity> AppCompatActivity?.openActivity() =
     this?.startActivity(Intent(this, T::class.java))
@@ -47,6 +50,10 @@ inline fun <reified T : AppCompatActivity> AppCompatActivity?.openActivity() =
 
 /**
  * 携带数据
+ *
+ *         val bundle =Bundle()
+ *         bundle.putString("tag","test")
+ *         this.openActivity<MainActivity>(bundle)
  */
 
 inline fun <reified T : AppCompatActivity> AppCompatActivity?.openActivity(bundle: Bundle) =
@@ -55,6 +62,8 @@ inline fun <reified T : AppCompatActivity> AppCompatActivity?.openActivity(bundl
 
 /**
  * 启动Activity的扩展方法，可在启动时指定自定义动画
+ *
+ *    this.startActivityWithAnimation<MainActivity>()
  */
 inline fun <reified T : AppCompatActivity> AppCompatActivity?.startActivityWithAnimation(
     enterAnim: Int = R.anim.fade_in,
@@ -72,6 +81,7 @@ inline fun <reified T : AppCompatActivity> AppCompatActivity?.startActivityWithA
 
 /**
  * 设置自定义转场动画
+ *
  */
 fun setCustomTransition(enterAnim: Int, exitAnim: Int, activity: AppCompatActivity) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {

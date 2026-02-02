@@ -18,7 +18,7 @@ import androidx.fragment.app.FragmentActivity
  * 扩展函数：为Activity添加单个权限请求
  *
  *
- *   if (ContextCompat.checkSelfPermission(
+ *    if (ContextCompat.checkSelfPermission(
  *                 this,
  *                 Manifest.permission.CAMERA
  *             ) == PackageManager.PERMISSION_GRANTED
@@ -77,9 +77,9 @@ fun Fragment.registerForSinglePermission(
 /**
  * 添加多权限请求
  *
- * private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
+ *     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
  *
- *  // 注册权限请求
+ *     // 注册权限请求
  *         permissionLauncher = registerForMultiplePermissions { permissions ->
  *             permissions.forEach { (permission, isGranted) ->
  *                 if (isGranted) {
