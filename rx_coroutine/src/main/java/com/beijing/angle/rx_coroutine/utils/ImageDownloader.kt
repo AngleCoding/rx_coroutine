@@ -1,9 +1,12 @@
 package com.beijing.angle.rx_coroutine.utils
 
+import androidx.fragment.app.Fragment
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment
+import androidx.appcompat.app.AppCompatActivity
+import com.beijing.angle.rx_coroutine.utils.StoragePermissionHelper.PermissionCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,18 +28,19 @@ import java.util.Locale
  */
 /**
  *
- *     ImageDownloader().downloadImageAsync(
- *                 "url",
- *                 object : DownloadListener {
- *                     override fun onSuccess(filePath: String, uri: Uri) {
- *                         showToast("图片保存成功：" + filePath)
- *                     }
  *
- *                     override fun onError(errorMessage: String) {
- *                         showToast(errorMessage)
- *                     }
+ *    ImageDownloader().downloadImageActivityAsync("url", this, object
+ *                 : DownloadListener {
+ *                 override fun onSuccess(filePath: String, uri: Uri) {
+ *                     showToast(filePath)
+ *                 }
  *
- *                 })
+ *                 override fun onError(errorMessage: String) {
+ *                     showToast(errorMessage)
+ *                 }
+ *
+ *             })
+ *
  */
 class ImageDownloader() {
 
@@ -45,21 +49,98 @@ class ImageDownloader() {
      * @param imageUrl 图片URL
      * @param listener 下载监听器
      */
-    fun downloadImageAsync(
+    fun downloadImageActivityAsync(
         imageUrl: String,
+        activity: AppCompatActivity,
         listener: DownloadListener
     ) {
-        CoroutineScope(Dispatchers.Main).launch {
-            when (val result = downloadImage(imageUrl)) {
-                is DownloadResult.Success -> listener.onSuccess(
-                    result.filePath,
-                    result.uri
-                )
 
-                is DownloadResult.Error -> listener.onError(result.errorMessage)
+        if (StoragePermissionHelper.checkStoragePermission()) {
+            CoroutineScope(Dispatchers.Main).launch {
+                when (val result = downloadImage(imageUrl)) {
+                    is DownloadResult.Success -> listener.onSuccess(
+                        result.filePath,
+                        result.uri
+                    )
+
+                    is DownloadResult.Error -> listener.onError(result.errorMessage)
+                }
             }
+        } else {
+            StoragePermissionHelper.requestStorageActivityPermission(
+                activity,
+                object : PermissionCallback {
+                    override fun onPermissionGranted() {
+                        CoroutineScope(Dispatchers.Main).launch {
+                            when (val result = downloadImage(imageUrl)) {
+                                is DownloadResult.Success -> listener.onSuccess(
+                                    result.filePath,
+                                    result.uri
+                                )
+
+                                is DownloadResult.Error -> listener.onError(result.errorMessage)
+                            }
+                        }
+                    }
+
+                    override fun onPermissionDenied() {
+                        listener.onError("保存失败，存储权限未打开")
+                    }
+
+                })
         }
+
     }
+
+
+    /**
+     * 异步下载图片带回调
+     * @param imageUrl 图片URL
+     * @param listener 下载监听器
+     */
+    fun downloadImageFragmentAsync(
+        imageUrl: String,
+        fragment: Fragment,
+        listener: DownloadListener
+    ) {
+
+        if (StoragePermissionHelper.checkStoragePermission()) {
+            CoroutineScope(Dispatchers.Main).launch {
+                when (val result = downloadImage(imageUrl)) {
+                    is DownloadResult.Success -> listener.onSuccess(
+                        result.filePath,
+                        result.uri
+                    )
+
+                    is DownloadResult.Error -> listener.onError(result.errorMessage)
+                }
+            }
+        } else {
+            StoragePermissionHelper.requestStorageFragmentPermission(
+                fragment,
+                object : PermissionCallback {
+                    override fun onPermissionGranted() {
+                        CoroutineScope(Dispatchers.Main).launch {
+                            when (val result = downloadImage(imageUrl)) {
+                                is DownloadResult.Success -> listener.onSuccess(
+                                    result.filePath,
+                                    result.uri
+                                )
+
+                                is DownloadResult.Error -> listener.onError(result.errorMessage)
+                            }
+                        }
+                    }
+
+                    override fun onPermissionDenied() {
+                        listener.onError("保存失败，存储权限未打开")
+                    }
+
+                })
+        }
+
+    }
+
 
     /**
      * 下载图片并保存到本地
@@ -68,7 +149,7 @@ class ImageDownloader() {
      * @param directory 保存目录（可选，默认Download目录）
      * @return 下载结果
      */
-    suspend fun downloadImage(
+    private suspend fun downloadImage(
         imageUrl: String,
         fileName: String? = null,
         directory: File? = null

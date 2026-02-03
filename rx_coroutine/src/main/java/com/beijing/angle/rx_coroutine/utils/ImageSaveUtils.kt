@@ -6,6 +6,10 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.beijing.angle.rx_coroutine.utils.StoragePermissionHelper.PermissionCallback
+import com.blankj.utilcode.util.Utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,19 +24,23 @@ import java.io.OutputStream
  *
  */
 /**
- *     ImageSaveUtils(mContext).saveImageAsync(com.github.yuan.picture_take.R.mipmap.back,object :SaveImageListener{
- *                 override fun onSuccess(filePath: String) {
- *                     showToast(filePath)
- *                 }
  *
- *                 override fun onError(errorMessage: String) {
- *                     showToast(errorMessage)
- *                 }
+ *    ImageSaveUtils().saveImageActivityAsync(
+ *                 R.mipmap.back,
+ *                 this,
+ *                 object : SaveImageListener {
+ *                     override fun onSuccess(filePath: String) {
+ *                         showToast(filePath)
+ *                     }
  *
- *             })
+ *                     override fun onError(errorMessage: String) {
+ *                         showToast(errorMessage)
+ *                     }
+ *
+ *                 })
  */
 
-class ImageSaveUtils(private val mContext: Context) {
+class ImageSaveUtils() {
 
     /**
      * 下载监听接口
@@ -57,28 +65,101 @@ class ImageSaveUtils(private val mContext: Context) {
      * @param listener 监听
      *
      */
-    fun saveImageAsync(
+    fun saveImageActivityAsync(
         resources: Int,
+        activity: AppCompatActivity,
         listener: SaveImageListener
     ) {
-        CoroutineScope(Dispatchers.Main).launch {
-            when (val result = saveImage(resources)) {
-                is ImageSaveResult.Success -> listener.onSuccess(
-                    result.message
-                )
+        if (StoragePermissionHelper.checkStoragePermission()) {
+            CoroutineScope(Dispatchers.Main).launch {
+                when (val result = saveImage(Utils.getApp(), resources)) {
+                    is ImageSaveResult.Success -> listener.onSuccess(
+                        result.message
+                    )
 
-                is ImageSaveResult.Error -> listener.onError(result.errorMessage)
+                    is ImageSaveResult.Error -> listener.onError(result.errorMessage)
+                }
             }
+        } else {
+            StoragePermissionHelper.requestStorageActivityPermission(
+                activity,
+                object : PermissionCallback {
+                    override fun onPermissionGranted() {
+                        CoroutineScope(Dispatchers.Main).launch {
+                            when (val result =
+                                saveImage(Utils.getApp(), resources)) {
+                                is ImageSaveResult.Success -> listener.onSuccess(
+                                    result.message
+                                )
+
+                                is ImageSaveResult.Error -> listener.onError(result.errorMessage)
+                            }
+                        }
+                    }
+
+                    override fun onPermissionDenied() {
+                        listener.onError("保存失败，存储权限未打开")
+                    }
+
+                })
+        }
+    }
+
+    /**
+     * 异步保存本地图片
+     * @param resources R.mipmap 资源文件
+     * @param listener 监听
+     *
+     */
+    fun saveImageFragmentAsync(
+        resources: Int,
+        mFragment: Fragment,
+        listener: SaveImageListener
+    ) {
+        if (StoragePermissionHelper.checkStoragePermission()) {
+            CoroutineScope(Dispatchers.Main).launch {
+                when (val result = saveImage(Utils.getApp(), resources)) {
+                    is ImageSaveResult.Success -> listener.onSuccess(
+                        result.message
+                    )
+
+                    is ImageSaveResult.Error -> listener.onError(result.errorMessage)
+                }
+            }
+        } else {
+            StoragePermissionHelper.requestStorageFragmentPermission(
+                mFragment,
+                object : PermissionCallback {
+                    override fun onPermissionGranted() {
+                        CoroutineScope(Dispatchers.Main).launch {
+                            when (val result =
+                                saveImage(Utils.getApp(), resources)) {
+                                is ImageSaveResult.Success -> listener.onSuccess(
+                                    result.message
+                                )
+
+                                is ImageSaveResult.Error -> listener.onError(result.errorMessage)
+                            }
+                        }
+                    }
+
+                    override fun onPermissionDenied() {
+                        listener.onError("保存失败，存储权限未打开")
+                    }
+
+                })
         }
     }
 
 
     private suspend fun saveImage(
+        context: Context,
         resources: Int
     ): ImageSaveResult = withContext(Dispatchers.IO) {
         return@withContext try {
-            val bitmap = BitmapFactory.decodeResource(mContext.resources, resources)
-            if (saveBitmap(mContext, bitmap)) {
+            val bitmap =
+                BitmapFactory.decodeResource(context.resources, resources)
+            if (saveBitmap(bitmap, context)) {
                 ImageSaveResult.Success("保存到手机相册,请前往查看！")
             } else {
                 ImageSaveResult.Error("保存失败")
@@ -89,11 +170,15 @@ class ImageSaveUtils(private val mContext: Context) {
     }
 
 
-    fun saveBitmap(context: Context, bitmap: Bitmap?): Boolean {
+   private fun saveBitmap(bitmap: Bitmap?, context: Context): Boolean {
         try {
             if (bitmap != null) {
                 val addPictureToAlbum =
-                    addPictureToAlbum(context, bitmap, "GSY-" + System.currentTimeMillis() + ".jpg")
+                    addPictureToAlbum(
+                        context,
+                        bitmap,
+                        "GSY-" + System.currentTimeMillis() + ".jpg"
+                    )
                 bitmap.recycle()
                 return addPictureToAlbum
             }

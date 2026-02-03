@@ -53,17 +53,6 @@ class MyFragment2 : BaseFragment<FragmentTwoBinding>() {
     override fun initListener() {
         binding.mButton.click {
 
-            ImageSaveUtils(mContext).saveImageAsync(
-                R.drawable.icon_back,
-                object : SaveImageListener {
-                    override fun onSuccess(filePath: String) {
-                        mContext.showToast("保存成功" + filePath)
-                    }
-
-                    override fun onError(errorMessage: String) {
-                        mContext.showToast(errorMessage)
-                    }
-                })
 
         }
     }
