@@ -1,12 +1,20 @@
 package com.beijing.angle.rx_coroutine.main.fragment
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import com.beijing.angle.rx_coroutine.R
 import com.beijing.angle.rx_coroutine.base.BaseFragment
 import com.beijing.angle.rx_coroutine.databinding.FragmentTwoBinding
+import com.beijing.angle.rx_coroutine.ext.click
+import com.beijing.angle.rx_coroutine.ext.showToast
 import com.beijing.angle.rx_coroutine.model.BaseModel
 import com.beijing.angle.rx_coroutine.network.vmObserverMain
+import com.beijing.angle.rx_coroutine.utils.ImageDownloader
+import com.beijing.angle.rx_coroutine.utils.ImageSaveUtils
+import com.beijing.angle.rx_coroutine.utils.ImageSaveUtils.SaveImageListener
 
 
 /**
@@ -43,8 +51,21 @@ class MyFragment2 : BaseFragment<FragmentTwoBinding>() {
     }
 
     override fun initListener() {
+        binding.mButton.click {
 
+            ImageSaveUtils(mContext).saveImageAsync(
+                R.drawable.icon_back,
+                object : SaveImageListener {
+                    override fun onSuccess(filePath: String) {
+                        mContext.showToast("保存成功" + filePath)
+                    }
 
+                    override fun onError(errorMessage: String) {
+                        mContext.showToast(errorMessage)
+                    }
+                })
+
+        }
     }
 
 

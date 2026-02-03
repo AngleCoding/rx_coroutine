@@ -1,7 +1,5 @@
 package com.beijing.angle.rx_coroutine.utils
 
-import androidx.appcompat.app.AppCompatActivity
-import com.beijing.angle.rx_coroutine.ext.log
 import com.beijing.angle.rx_coroutine.lifecycle.RxActivity
 import java.lang.ref.WeakReference
 

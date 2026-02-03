@@ -51,6 +51,7 @@ class MyFragment : BaseFragment<FragmentMyBinding>() {
 
     override fun iniAgainRequestViewModel() {
         baseModel.getLatestOne()
+
     }
 
 
