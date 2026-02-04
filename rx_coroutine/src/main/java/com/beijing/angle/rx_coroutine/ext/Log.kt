@@ -10,7 +10,6 @@ import android.util.Log
  */
 
 
-
 inline fun <reified T> T.log(message: String) {
     Log.e(T::class.simpleName, message)
 }

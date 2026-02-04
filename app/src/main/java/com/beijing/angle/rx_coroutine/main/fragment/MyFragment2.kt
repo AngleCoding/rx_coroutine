@@ -13,8 +13,6 @@ import com.beijing.angle.rx_coroutine.ext.showToast
 import com.beijing.angle.rx_coroutine.model.BaseModel
 import com.beijing.angle.rx_coroutine.network.vmObserverMain
 import com.beijing.angle.rx_coroutine.utils.ImageDownloader
-import com.beijing.angle.rx_coroutine.utils.ImageSaveUtils
-import com.beijing.angle.rx_coroutine.utils.ImageSaveUtils.SaveImageListener
 
 
 /**
