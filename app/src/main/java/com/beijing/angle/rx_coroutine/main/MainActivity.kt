@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import com.beijing.angle.rx_coroutine.base.BaseActivity
 import com.beijing.angle.rx_coroutine.databinding.ActivityMainBinding
 import com.beijing.angle.rx_coroutine.ext.click
+import com.beijing.angle.rx_coroutine.permission.BluetoothPermissionHelper
+import com.beijing.angle.rx_coroutine.permission.BluetoothPermissionHelper.PermissionCallback
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
