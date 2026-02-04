@@ -1,18 +1,21 @@
-package com.beijing.angle.rx_coroutine.utils
+package com.beijing.angle.rx_coroutine.permission
 
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.provider.Settings
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.PermissionUtils
-import com.blankj.utilcode.util.PermissionUtils.OnRationaleListener
 import com.blankj.utilcode.util.UtilsTransActivity
 
 /**
  * 申请存储权限
+ *
+ *     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+ *     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
  *
  *      if (!StoragePermissionHelper.checkStoragePermission(mContext)) {
  *            StoragePermissionHelper.requestStoragePermission(this, object : PermissionCallback {
@@ -38,7 +41,7 @@ object StoragePermissionHelper {
     fun requestStorageActivityPermission(activity: Activity, callback: PermissionCallback) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             // Android 11及以上版本
-            if (android.os.Environment.isExternalStorageManager()) {
+            if (Environment.isExternalStorageManager()) {
                 callback.onPermissionGranted()
             } else {
                 // 请求所有文件访问权限
@@ -56,10 +59,10 @@ object StoragePermissionHelper {
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             )
-                .rationale(object : OnRationaleListener {
+                .rationale(object : PermissionUtils.OnRationaleListener {
                     override fun rationale(
                         activity: UtilsTransActivity,
-                        shouldRequest: OnRationaleListener.ShouldRequest
+                        shouldRequest: PermissionUtils.OnRationaleListener.ShouldRequest
                     ) {
                         shouldRequest.again(true)
                     }
@@ -86,7 +89,7 @@ object StoragePermissionHelper {
     fun requestStorageFragmentPermission(fragment: Fragment, callback: PermissionCallback) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             // Android 11及以上版本
-            if (android.os.Environment.isExternalStorageManager()) {
+            if (Environment.isExternalStorageManager()) {
                 callback.onPermissionGranted()
             } else {
                 // 请求所有文件访问权限
@@ -101,10 +104,10 @@ object StoragePermissionHelper {
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             )
-                .rationale(object : OnRationaleListener {
+                .rationale(object : PermissionUtils.OnRationaleListener {
                     override fun rationale(
                         activity: UtilsTransActivity,
-                        shouldRequest: OnRationaleListener.ShouldRequest
+                        shouldRequest: PermissionUtils.OnRationaleListener.ShouldRequest
                     ) {
                         shouldRequest.again(true)
                     }
@@ -130,7 +133,7 @@ object StoragePermissionHelper {
      */
     fun checkStoragePermission(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            android.os.Environment.isExternalStorageManager()
+            Environment.isExternalStorageManager()
         } else {
             PermissionUtils.isGranted(
                 Manifest.permission.READ_EXTERNAL_STORAGE,

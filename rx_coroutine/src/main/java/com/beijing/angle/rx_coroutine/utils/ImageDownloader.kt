@@ -6,7 +6,8 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment
 import androidx.appcompat.app.AppCompatActivity
-import com.beijing.angle.rx_coroutine.utils.StoragePermissionHelper.PermissionCallback
+import com.beijing.angle.rx_coroutine.permission.StoragePermissionHelper
+import com.beijing.angle.rx_coroutine.permission.StoragePermissionHelper.PermissionCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

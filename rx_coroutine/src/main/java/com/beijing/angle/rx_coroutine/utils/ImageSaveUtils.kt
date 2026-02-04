@@ -8,7 +8,8 @@ import android.net.Uri
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.beijing.angle.rx_coroutine.utils.StoragePermissionHelper.PermissionCallback
+import com.beijing.angle.rx_coroutine.permission.StoragePermissionHelper
+import com.beijing.angle.rx_coroutine.permission.StoragePermissionHelper.PermissionCallback
 import com.blankj.utilcode.util.Utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
