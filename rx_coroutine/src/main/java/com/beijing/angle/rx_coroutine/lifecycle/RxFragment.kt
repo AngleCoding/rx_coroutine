@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.beijing.angle.rx_coroutine.ext.log
 import com.beijing.angle.rx_coroutine.lifecycle.event.FragmentEvent
 import com.beijing.angle.rx_coroutine.lifecycle.function.LifecycleProvider
 import com.beijing.angle.rx_coroutine.lifecycle.function.LifecycleTransformer

@@ -12,6 +12,7 @@ import com.beijing.angle.rx_coroutine.databinding.ActivityMainBinding
 import com.beijing.angle.rx_coroutine.ext.click
 import com.beijing.angle.rx_coroutine.ext.dp2px
 import com.beijing.angle.rx_coroutine.ext.getScreenWidth
+import com.beijing.angle.rx_coroutine.ext.isMainThread
 import com.beijing.angle.rx_coroutine.ext.showToast
 import com.beijing.angle.rx_coroutine.utils.ImageUtils.ImageManageListener
 import com.beijing.angle.rx_coroutine.utils.ImageUtils.addTextWatermarkAsync
@@ -38,6 +39,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initView(bundle: Bundle?) {
 
         binding.mBtClick.click {
+            if (isMainThread()) {
+                showToast("主线程")
+            } else {
+                showToast("bus主线程")
+            }
         }
 
     }
