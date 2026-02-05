@@ -19,29 +19,6 @@ import rxhttp.wrapper.parse.TypeParser
  *
  * @param result 请求结果
  */
-//fun <T> VmLiveData<T>.paresVmResult(result: BaseResponse<T>) {
-//
-//    result.code?.let {
-//        if (it == BaseApp.instance.getResultSuccessCode()) {
-//            result.result?.let {
-//                value = VmState.Success(it)
-//            } ?: this.paresVmException(JsonSyntaxException("data is null"))
-//        } else if (it == BaseApp.instance.getTokenFailureCode()) {
-//            value = VmState.TokenFailure(it)
-//        }else{
-//            value = VmState.Error(it)
-//        }
-//
-//    } ?: this.paresVmException(JsonSyntaxException("数据错误"))
-//
-//}
-
-
-/**
- * 处理返回值
- *
- * @param result 请求结果
- */
 fun <T> VmLiveData<T>.paresVmResult(result: BaseResponse<T>) {
     try {
         if (result.code == BaseApp.instance.getResultSuccessCode()) {

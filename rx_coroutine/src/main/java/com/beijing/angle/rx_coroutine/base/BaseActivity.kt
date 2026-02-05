@@ -34,8 +34,6 @@ import java.io.StringWriter
  */
 
 
-
-
 /**
  *
  *     viewBinding{ enable= true }
@@ -62,7 +60,7 @@ import java.io.StringWriter
  *    override fun initData() {
  *     }
 
-*/
+ */
 
 abstract class BaseActivity<VB : ViewBinding> : RxActivity(),
     CustomAdapt, IBaseUIView {

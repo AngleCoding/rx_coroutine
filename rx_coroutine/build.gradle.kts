@@ -98,6 +98,12 @@ dependencies {
     api(libs.pickerView)
     api(libs.adapter)
 
+
+    api(libs.datastore)
+    api(libs.preferences)
+
+
+
 }
 
 afterEvaluate {

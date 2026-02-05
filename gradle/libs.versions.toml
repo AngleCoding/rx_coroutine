@@ -31,6 +31,8 @@ android_picture_version = 'v2.0.4'
 appupdate_version = '4.3.6'
 pickerView_version = '4.1.9'
 adapter_version = '4.0.0-beta02'
+datastore_version = '1.2.0'
+preferences_version = '1.2.0'
 
 
 [libraries]
@@ -79,6 +81,8 @@ picture = { group = "com.github.AngleCoding", name = "android_picture", version.
 appupdate = { group = "io.github.azhon", name = "appupdate", version.ref = "appupdate_version" }
 pickerView = { group = "com.contrarywind", name = "Android-PickerView", version.ref = "pickerView_version" }
 adapter = { group = "io.github.cymchad", name = "BaseRecyclerViewAdapterHelper", version.ref = "adapter_version" }
+datastore = { group = "androidx.datastore", name = "datastore", version.ref = "datastore_version" }
+preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "preferences_version" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

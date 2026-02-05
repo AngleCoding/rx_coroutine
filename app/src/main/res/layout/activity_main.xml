@@ -20,4 +20,13 @@
 
     </Button>
 
+    <Button
+        android:id="@+id/mBtClick2"
+        android:text="销毁"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </Button>
+
+
 </RelativeLayout>

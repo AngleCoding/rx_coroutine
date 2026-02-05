@@ -3,6 +3,8 @@ package com.beijing.angle.rx_coroutine.base
 import android.app.Application
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import com.blankj.utilcode.util.SPStaticUtils
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.Utils
 import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.AutoSizeConfig
