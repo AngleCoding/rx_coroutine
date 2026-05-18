@@ -1,8 +1,9 @@
 package com.beijing.angle.rx_coroutine.ext
 
-import android.annotation.SuppressLint
 import android.view.View
+import com.jakewharton.rxbinding4.view.ViewLayoutChangeEvent
 import com.jakewharton.rxbinding4.view.clicks
+import com.jakewharton.rxbinding4.view.layoutChangeEvents
 import java.util.concurrent.TimeUnit
 
 /**
@@ -15,7 +16,6 @@ import java.util.concurrent.TimeUnit
 /**
  * 按钮监听
  */
-@SuppressLint("CheckResult")
 fun <T : View> T.click(block: () -> Unit) =
     clicks()
         .throttleFirst(3000, TimeUnit.MILLISECONDS)
