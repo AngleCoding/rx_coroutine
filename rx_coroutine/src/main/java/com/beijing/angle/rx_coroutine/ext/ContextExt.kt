@@ -5,6 +5,9 @@ import android.content.Context
 import android.graphics.Bitmap
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 /**
  * @author 刘红鹏
@@ -178,4 +181,29 @@ fun Any.px2sp(dpValue: Float): Int {
     return SizeUtils.px2sp(dpValue)
 }
 
+
+
+/**
+ * 创建打字机效果的 Flow
+ * @param text 完整文本
+ * @param delayMs 每个字符之间的间隔时间（毫秒）
+ *
+ *    lifecycleScope.launch {
+ *
+ *                     typewriterFlow(
+ *                         it,
+ *                         80
+ *                     ).collectLatest { currentText ->
+ *                         binding.mTvTxt.text = currentText
+ *                     }
+ *
+ *                 }
+ */
+fun Any.typewriterFlow(text: String, delayMs: Long = 50): Flow<String> = flow {
+    // 逐步发射子字符串，而不是单个字符，这样性能更好且支持富文本
+    for (i in text.indices) {
+        emit(text.substring(0, i + 1))
+        delay(delayMs)
+    }
+}
 
