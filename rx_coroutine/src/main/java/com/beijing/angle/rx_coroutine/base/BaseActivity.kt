@@ -164,7 +164,7 @@ abstract class BaseActivity<VB : ViewBinding> : RxActivity(),
         super.onCreate(savedInstanceState)
         BarUtils.setStatusBarColor(this, Color.TRANSPARENT)
         AppManager.instance.addActivity(this)
-        this.mContext = applicationContext
+        this.mContext = this
         enableEdgeToEdge()
         initialization(savedInstanceState)
     }

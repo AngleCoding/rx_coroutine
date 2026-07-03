@@ -1,6 +1,7 @@
 package com.beijing.angle.rx_coroutine.base
 
 import android.app.Application
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.SPStaticUtils
@@ -51,7 +52,7 @@ open class BaseApp : Application() {
      *
      */
     open fun getCacheMode(): CacheMode {
-        return CacheMode.REQUEST_NETWORK_FAILED_READ_CACHE
+        return CacheMode.ONLY_NETWORK
     }
 
     /**
@@ -71,11 +72,14 @@ open class BaseApp : Application() {
 
 
     companion object {
-        val instance: BaseApp by lazy { BaseApp() } // 默认线程安全
+        lateinit var instance: BaseApp
+        lateinit var mContext: Context
     }
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
+        mContext = this
         Utils.init(this)
         initAutoSize()
         initRxHttp()
