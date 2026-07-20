@@ -20,7 +20,7 @@ import java.net.SocketTimeoutException
 class Repository {
 
     suspend fun getLatestOne(): BaseResponse<LatestOneBean> {
-        val bean = RxHttp.Companion.get(App.Companion.BASE_URL + "/versions/getLatestOne")
+        val bean = RxHttp.Companion.get(App.Companion.BASE_URL + "/version/getLatestOne")
             .addQuery("type", "HGZLSYTJ_DJY")
             .setHeader("deviceCode", DeviceUtils.getUniqueDeviceId())
             .toAwait<LatestOneBean>()

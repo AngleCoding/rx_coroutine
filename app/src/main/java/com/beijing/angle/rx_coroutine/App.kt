@@ -17,7 +17,7 @@ class App : BaseApp() {
 
     companion object {
         @DefaultDomain
-        const val BASE_URL: String = "http://hgz.app.creditmoa.com"
+        const val BASE_URL: String = "http://"
     }
 
     override fun onCreate() {
