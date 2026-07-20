@@ -10,6 +10,7 @@ import com.beijing.angle.rx_coroutine.base.BaseFragment
 import com.beijing.angle.rx_coroutine.base.BaseViewModel
 import com.beijing.angle.rx_coroutine.base.EBaseViewStatus
 import com.beijing.angle.rx_coroutine.ext.showToast
+import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.JsonSyntaxException
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.launch
@@ -220,14 +221,43 @@ inline fun <T> VmLiveData<T>.vmObserverDefault(
  */
 @MainThread
 inline fun <T> VmLiveData<T>.vmObserverMain(
-    activity: BaseActivity<*>,
-    crossinline onSuccess: ((T) -> Unit)
+    activity: BaseActivity<*>, crossinline onSuccess: ((T) -> Unit)
 ) {
     observe(activity) {
         when (it) {
             is VmState.Loading -> {
                 activity.setBaseViewStatus(EBaseViewStatus.LOADING)
-                activity.showLoadingLayout()
+                activity.showUploadLayout("加载中...")
+
+            }
+
+            is VmState.Success -> {
+                it.data?.let {
+                    onSuccess(it)
+                    activity.showSuccessLayout()
+                } ?: activity.showErrorLayout("无数据")
+            }
+
+            is VmState.Error -> {
+                activity.setBaseViewStatus(EBaseViewStatus.ERROR)
+                activity.showErrorLayout(it.error.errorMsg)
+            }
+
+            VmState.TokenFailure -> BaseApp.instance.startLoginActivity()
+        }
+    }
+}
+
+
+@MainThread
+inline fun <T> VmLiveData<T>.vmObserverLoading(
+    activity: BaseActivity<*>, crossinline onSuccess: ((T) -> Unit)
+) {
+    observe(activity) {
+        when (it) {
+            is VmState.Loading -> {
+                activity.setBaseViewStatus(EBaseViewStatus.LOADING)
+                activity.showUploadLayout("加载中...")
 
             }
 
@@ -251,9 +281,7 @@ inline fun <T> VmLiveData<T>.vmObserverMain(
 
 @MainThread
 inline fun <T> VmLiveData<T>.vmObserverMain(
-    activity: BaseActivity<*>,
-    loadingTxt: String?,
-    crossinline onSuccess: ((T) -> Unit)
+    activity: BaseActivity<*>, loadingTxt: String?, crossinline onSuccess: ((T) -> Unit)
 ) {
     observe(activity) {
         when (it) {
@@ -298,7 +326,7 @@ inline fun <T> VmLiveData<T>.vmObserverMain(
         when (it) {
             is VmState.Loading -> {
                 activity.setBaseViewStatus(EBaseViewStatus.LOADING)
-                activity.showLoadingLayout()
+                activity.showUploadLayout("加载中...")
             }
 
             is VmState.Success -> {
@@ -371,14 +399,13 @@ inline fun <T> VmLiveData<T>.vmObserverMain(
  */
 @MainThread
 inline fun <T> VmLiveData<T>.vmObserverLoading(
-    fragment: BaseFragment<*>,
-    crossinline onSuccess: ((T) -> Unit)
+    fragment: BaseFragment<*>, crossinline onSuccess: ((T) -> Unit)
 ) {
     observe(fragment) {
         when (it) {
             is VmState.Loading -> {
                 fragment.setBaseViewStatus(EBaseViewStatus.LOADING)
-                fragment.showLoadingLayout()
+                fragment.showUploadLayout("加载中...")
             }
 
             is VmState.Success -> {
@@ -416,7 +443,7 @@ inline fun <T> VmLiveData<T>.vmObserverLoading(
         when (it) {
             is VmState.Loading -> {
                 fragment.setBaseViewStatus(EBaseViewStatus.LOADING)
-                fragment.showLoadingLayout()
+                fragment.showUploadLayout("加载中...")
             }
 
             is VmState.Success -> {
@@ -449,8 +476,7 @@ inline fun <T> VmLiveData<T>.vmObserverLoading(
  */
 @MainThread
 inline fun <T> VmLiveData<T>.vmObserverDefault(
-    fragment: BaseFragment<*>,
-    crossinline onSuccess: ((T) -> Unit)
+    fragment: BaseFragment<*>, crossinline onSuccess: ((T) -> Unit)
 ) {
     observe(fragment) {
         when (it) {
@@ -556,14 +582,13 @@ inline fun <T> VmLiveData<T>.vmObserverDefault(
  */
 @MainThread
 inline fun <T> VmLiveData<T>.vmObserverMain(
-    fragment: BaseFragment<*>,
-    crossinline onSuccess: ((T) -> Unit)
+    fragment: BaseFragment<*>, crossinline onSuccess: ((T) -> Unit)
 ) {
     observe(fragment) {
         when (it) {
             is VmState.Loading -> {
                 fragment.setBaseViewStatus(EBaseViewStatus.LOADING)
-                fragment.showLoadingLayout()
+                fragment.showUploadLayout("加载中...")
 
             }
 
@@ -588,9 +613,7 @@ inline fun <T> VmLiveData<T>.vmObserverMain(
 
 @MainThread
 inline fun <T> VmLiveData<T>.vmObserverMain(
-    fragment: BaseFragment<*>,
-    loadingTxt: String?,
-    crossinline onSuccess: ((T) -> Unit)
+    fragment: BaseFragment<*>, loadingTxt: String?, crossinline onSuccess: ((T) -> Unit)
 ) {
     observe(fragment) {
         when (it) {
@@ -636,7 +659,7 @@ inline fun <T> VmLiveData<T>.vmObserverMain(
         when (it) {
             is VmState.Loading -> {
                 fragment.setBaseViewStatus(EBaseViewStatus.LOADING)
-                fragment.showLoadingLayout()
+                fragment.showUploadLayout("加载中...")
             }
 
             is VmState.Success -> {

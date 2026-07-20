@@ -18,9 +18,6 @@ interface IBaseUIView {
     /** 显示成功布局  */
     fun showSuccessLayout()
 
-    /** 显示加载中布局  */
-    fun showLoadingLayout()
-
 
     /** 显示上传布局  */
     fun showUploadLayout(loadingTxt: String? = "加载中...")

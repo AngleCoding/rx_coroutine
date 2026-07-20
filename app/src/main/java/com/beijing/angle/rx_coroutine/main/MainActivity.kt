@@ -8,9 +8,13 @@ import com.beijing.angle.rx_coroutine.base.BaseActivity
 import com.beijing.angle.rx_coroutine.databinding.ActivityMainBinding
 import com.beijing.angle.rx_coroutine.ext.click
 import com.beijing.angle.rx_coroutine.ext.hexString2Int
+import com.beijing.angle.rx_coroutine.model.BaseModel
+import com.beijing.angle.rx_coroutine.network.vmObserverMain
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
+
+    private val baseModel: BaseModel by lazy { BaseModel() }
 
 
     override fun getViewBinding(inflater: LayoutInflater): ActivityMainBinding {
@@ -30,7 +34,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initListener() {
 
         binding.mBtClick.click {
-            binding.mBtClick.setText(hexString2Int("2"))
+            baseModel.getLatestOne()
         }
 
     }
@@ -43,11 +47,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun initData() {
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
+        baseModel.latestOneBean.vmObserverMain(this, onSuccess = {
+        })
     }
 
 

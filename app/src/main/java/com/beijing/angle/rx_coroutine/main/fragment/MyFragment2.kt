@@ -66,8 +66,6 @@ class MyFragment2 : BaseFragment<FragmentTwoBinding>() {
 
 
     override fun initData() {
-        baseModel.latestOneBean.vmObserverMain(this, onSuccess = {
-        })
     }
 
 

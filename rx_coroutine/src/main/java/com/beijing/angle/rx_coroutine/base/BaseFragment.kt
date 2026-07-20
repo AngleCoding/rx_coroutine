@@ -190,7 +190,7 @@ abstract class BaseFragment<VB : ViewBinding> : RxFragment(), IBaseUIView {
         try {
             when (baseViewStatus) {
                 EBaseViewStatus.LOADING -> {
-                    showLoadingLayout()
+                    showUploadLayout("加载中...")
                 }
 
                 EBaseViewStatus.SUCCESS -> {
@@ -209,31 +209,6 @@ abstract class BaseFragment<VB : ViewBinding> : RxFragment(), IBaseUIView {
                     showErrorLayout("")
                 }
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Toast.makeText(mContext, getCompleteExceptionInfo(e), Toast.LENGTH_LONG).show()
-        }
-
-    }
-
-
-    /**
-     * 显示加载中界面
-     */
-    override fun showLoadingLayout() {
-        try {
-            loadingView ?: let {
-                loadingView = baseBinding.loadingStub.inflate()
-            }
-
-            //显示界面
-            baseBinding.contentLayout.visibility = GONE
-            loadingView?.visibility = VISIBLE
-            errorView?.visibility = GONE
-
-
-            //更改状态
-            myBaseViewStatus = EBaseViewStatus.LOADING
         } catch (e: Exception) {
             e.printStackTrace()
             Toast.makeText(mContext, getCompleteExceptionInfo(e), Toast.LENGTH_LONG).show()
@@ -301,12 +276,9 @@ abstract class BaseFragment<VB : ViewBinding> : RxFragment(), IBaseUIView {
                 errorView = baseBinding.errorStub.inflate()
             }
 
-            //显示界面
-            errorView?.visibility = VISIBLE
             baseBinding.contentLayout.visibility = GONE
-            loadingView?.visibility = GONE
+            errorView?.visibility = VISIBLE
             uploadStubView?.visibility = GONE
-
 
             errorView?.findViewById<TextView>(R.id.mTvContent)?.apply {
                 text = loadingTxt
@@ -317,7 +289,6 @@ abstract class BaseFragment<VB : ViewBinding> : RxFragment(), IBaseUIView {
                     iniAgainRequestViewModel()
                 }
             }
-
             //更改状态
             myBaseViewStatus = EBaseViewStatus.ERROR
         } catch (e: Exception) {

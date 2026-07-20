@@ -102,7 +102,7 @@ dependencies {
     api(libs.datastore)
     api(libs.preferences)
 
-    api(libs.immersionbar)
+
 
 }
 

@@ -33,7 +33,6 @@ pickerView_version = '4.1.9'
 adapter_version = '4.0.0-beta02'
 datastore_version = '1.2.0'
 preferences_version = '1.2.0'
-immersionbar_version = '3.0.0-beta05'
 
 
 [libraries]
@@ -84,7 +83,6 @@ pickerView = { group = "com.contrarywind", name = "Android-PickerView", version.
 adapter = { group = "io.github.cymchad", name = "BaseRecyclerViewAdapterHelper", version.ref = "adapter_version" }
 datastore = { group = "androidx.datastore", name = "datastore", version.ref = "datastore_version" }
 preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "preferences_version" }
-immersionbar = { group = "com.gyf.immersionbar", name = "immersionbar", version.ref = "immersionbar_version" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

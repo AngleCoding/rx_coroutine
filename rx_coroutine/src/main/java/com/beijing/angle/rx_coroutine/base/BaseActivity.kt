@@ -76,9 +76,8 @@ abstract class BaseActivity<VB : ViewBinding> : RxActivity(),
     private var myBaseViewStatus =
         EBaseViewStatus.SUCCESS //页面显示状态 SUCCESS, LOADING, ERROR  分别表示正常、加载中、失败
 
-    private var loadingView: View? = null //加载中布局
     private var errorView: View? = null //错误布局
-    private var uploadStubView: View? = null //错误布局
+    private var uploadStubView: View? = null //加载中布局
 
 
     /**
@@ -219,7 +218,7 @@ abstract class BaseActivity<VB : ViewBinding> : RxActivity(),
         try {
             when (baseViewStatus) {
                 EBaseViewStatus.LOADING -> {
-                    showLoadingLayout()
+                    showUploadLayout("加载中...")
                 }
 
                 EBaseViewStatus.SUCCESS -> {
@@ -246,32 +245,6 @@ abstract class BaseActivity<VB : ViewBinding> : RxActivity(),
     }
 
 
-    /**
-     * 显示加载中界面
-     */
-    override fun showLoadingLayout() {
-        try {
-            loadingView ?: let {
-                loadingView = baseBinding.loadingStub.inflate()
-            }
-
-            //显示界面
-            baseBinding.contentLayout.visibility = GONE
-            loadingView?.visibility = VISIBLE
-            errorView?.visibility = GONE
-            uploadStubView?.visibility = GONE
-
-            //更改状态
-            myBaseViewStatus = EBaseViewStatus.LOADING
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Toast.makeText(mContext, getCompleteExceptionInfo(e), Toast.LENGTH_LONG).show()
-        }
-
-
-    }
-
-
     override fun showUploadLayout(loadingTxt: String?) {
         try {
             uploadStubView ?: let {
@@ -286,7 +259,6 @@ abstract class BaseActivity<VB : ViewBinding> : RxActivity(),
             //显示界面
             baseBinding.contentLayout.visibility = VISIBLE
             uploadStubView?.visibility = VISIBLE
-            loadingView?.visibility = GONE
             errorView?.visibility = GONE
 
 
@@ -307,7 +279,6 @@ abstract class BaseActivity<VB : ViewBinding> : RxActivity(),
         try {
             //显示界面
             baseBinding.contentLayout.visibility = VISIBLE
-            loadingView?.visibility = GONE
             errorView?.visibility = GONE
             uploadStubView?.visibility = GONE
             //更改状态
@@ -316,7 +287,6 @@ abstract class BaseActivity<VB : ViewBinding> : RxActivity(),
             e.printStackTrace()
             Toast.makeText(mContext, getCompleteExceptionInfo(e), Toast.LENGTH_LONG).show()
         }
-
 
     }
 
@@ -332,12 +302,9 @@ abstract class BaseActivity<VB : ViewBinding> : RxActivity(),
                 errorView = baseBinding.errorStub.inflate()
             }
 
-            //显示界面
             baseBinding.contentLayout.visibility = GONE
-            loadingView?.visibility = GONE
             errorView?.visibility = VISIBLE
             uploadStubView?.visibility = GONE
-
 
             errorView?.findViewById<TextView>(R.id.mTvContent)?.apply {
                 text = loadingTxt
@@ -345,6 +312,8 @@ abstract class BaseActivity<VB : ViewBinding> : RxActivity(),
 
             errorView?.findViewById<TextView>(R.id.mBtRetry)?.apply {
                 this.click {
+                    //更改状态
+                    showSuccessLayout()
                     iniAgainRequestViewModel()
                 }
             }
