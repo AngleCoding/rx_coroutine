@@ -21,7 +21,6 @@ class MyFragment : BaseFragment<FragmentMyBinding>() {
 
     private val baseModel: BaseModel by lazy { BaseModel() }
 
-
     companion object {
         fun newInstance(): MyFragment {
             val fragment = MyFragment()
@@ -51,6 +50,7 @@ class MyFragment : BaseFragment<FragmentMyBinding>() {
 
     override fun iniAgainRequestViewModel() {
         baseModel.getLatestOne()
+
 
     }
 
