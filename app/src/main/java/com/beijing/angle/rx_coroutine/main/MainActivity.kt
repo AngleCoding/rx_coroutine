@@ -25,9 +25,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
 
-
     override fun initView(bundle: Bundle?) {
-
 
     }
 
@@ -38,15 +36,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.mBtClick.click {
 //            baseModel.getLatestOne()
         }
-
     }
 
     override fun initViewModel() {
     }
 
-    override fun iniAgainRequestViewModel() {
-
-    }
 
     override fun initData() {
         baseModel.latestOneBean.vmObserverMain(this, onSuccess = {
