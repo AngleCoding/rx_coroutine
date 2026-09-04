@@ -101,10 +101,6 @@ abstract class BaseActivity<VB : ViewBinding> : RxActivity(),
      */
     abstract fun initViewModel()
 
-    /**
-     * 重新请求
-     */
-    abstract fun iniAgainRequestViewModel()
 
     /**
      * 数据
@@ -314,7 +310,6 @@ abstract class BaseActivity<VB : ViewBinding> : RxActivity(),
                 this.click {
                     //更改状态
                     showSuccessLayout()
-                    iniAgainRequestViewModel()
                 }
             }
 
