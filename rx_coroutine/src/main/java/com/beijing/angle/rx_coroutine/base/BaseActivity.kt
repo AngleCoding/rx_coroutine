@@ -66,7 +66,7 @@ abstract class BaseActivity<VB : ViewBinding> : RxActivity(),
     CustomAdapt, IBaseUIView {
 
 
-    private lateinit var baseBinding: ActivityBaseBinding
+    protected lateinit var baseBinding: ActivityBaseBinding
 
     protected lateinit var binding: VB
 

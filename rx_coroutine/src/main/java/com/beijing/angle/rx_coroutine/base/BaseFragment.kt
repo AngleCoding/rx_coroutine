@@ -96,7 +96,7 @@ import java.io.StringWriter
 abstract class BaseFragment<VB : ViewBinding> : RxFragment(), IBaseUIView {
 
 
-    private lateinit var baseBinding: FragmentBaseBinding
+    protected lateinit var baseBinding: FragmentBaseBinding
 
 
     protected lateinit var binding: VB
@@ -286,7 +286,8 @@ abstract class BaseFragment<VB : ViewBinding> : RxFragment(), IBaseUIView {
 
             errorView?.findViewById<TextView>(R.id.mBtRetry)?.apply {
                 this.click {
-                    iniAgainRequestViewModel()
+                    //更改状态
+                    showSuccessLayout()
                 }
             }
             //更改状态
@@ -295,7 +296,6 @@ abstract class BaseFragment<VB : ViewBinding> : RxFragment(), IBaseUIView {
             e.printStackTrace()
             Toast.makeText(mContext, getCompleteExceptionInfo(e), Toast.LENGTH_LONG).show()
         }
-
 
     }
 
