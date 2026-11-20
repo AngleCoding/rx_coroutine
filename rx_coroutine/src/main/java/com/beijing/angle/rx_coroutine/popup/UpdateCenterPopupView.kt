@@ -39,11 +39,13 @@ class UpdateCenterPopupView constructor(
     private fun initOnClickListener() {
         mPopupUpdateBinding.update.click {
             updateClickListener?.update()
+            dismiss()
         }
 
 
         mPopupUpdateBinding.cancel.click {
             updateClickListener?.finish()
+            dismiss()
         }
 
     }
